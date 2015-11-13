@@ -49,6 +49,8 @@ namespace CommunityCoreLibrary
 
         public List< Type >                 PostLoadInjectors;
 
+        public List< Type >                 PostWorldLoadInjectors;
+
         public bool                         UsesGenericHoppers = false;
 
         #endregion
@@ -59,6 +61,7 @@ namespace CommunityCoreLibrary
 
         bool                                specialsInjected;
         bool                                postLoadersInjected;
+        bool                                postWorldLoadersInjected;
 
         #endregion
 
@@ -314,6 +317,19 @@ namespace CommunityCoreLibrary
             }
         }
 
+        public bool                         PostWorldLoadersInjected
+        {
+            get
+            {
+                if( PostWorldLoadInjectors.NullOrEmpty() )
+                {
+                    return true;
+                }
+
+                return postWorldLoadersInjected;
+            }
+        }
+
         #endregion
 
         #region Injection
@@ -469,6 +485,21 @@ namespace CommunityCoreLibrary
 
             // TODO:  Alpha 13 API change
             //return postLoadersInjected;
+        }
+
+        // TODO:  Alpha 13 API change
+        //public bool                         InjectPostWorldLoaders()
+        public void                         InjectPostWorldLoaders()
+        {
+            foreach( var injectorType in PostWorldLoadInjectors )
+            {
+                var injectorObject = (SpecialInjector) Activator.CreateInstance( injectorType );
+                injectorObject.Inject();
+            }
+            postWorldLoadersInjected = true;
+
+            // TODO:  Alpha 13 API change
+            //return postWorldLoadersInjected;
         }
 
         #endregion

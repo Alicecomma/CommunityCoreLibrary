@@ -100,13 +100,27 @@ namespace CommunityCoreLibrary.Controller
             if(
                 ( !gameValid )||
                 ( !mapValid )||
-                ( Game.Mode != GameMode.MapPlaying )||
-                ( Find.Map == null )||
-                ( Find.Map.components == null )
+                ( Find.World == null )
             )
             {
                 return;
             }
+        	
+            // Do post-worldload injections
+            if( Resources.Injectors.PostWorldLoad.ThingsToInject() && !Resources.Injectors.PostWorldLoad.Inject() )
+            {
+                CCL_Log.Error( "Initialization Error!", "Post-WorldLoad Injection" );
+                return;
+            }
+        	
+        	if(
+                ( Game.Mode != GameMode.MapPlaying )||
+                ( Find.Map == null )||
+                ( Find.Map.components == null )
+        	)
+        	{
+        		return;
+        	}
 
             // Do post-load injections
             if( !Resources.Injectors.PostLoad.Inject() )
