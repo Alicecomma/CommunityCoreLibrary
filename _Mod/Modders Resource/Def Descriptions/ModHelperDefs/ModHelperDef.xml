@@ -16,8 +16,12 @@
         </SpecialInjectors>
 
         <PostLoadInjectors>             [optional] Class names of SpecialInjectors to execute after starting a new game or loading save games
-            <li>SpecialInjector</li>
+            <li>SpecialInjector</li>					Any classes in this tag will be called after Current.Map and Current.Map.components (MapComponents) are loaded in
         </PostLoadInjectors>
+
+        <PostWorldLoadInjectors>             [optional] Class names of SpecialInjectors to execute after a world is loaded or generated
+            <li>SpecialInjector</li>					Any classes in this tag will be called after Current.World is loaded in
+        </PostWorldLoadInjectors>
 
         <MapComponents>                 [optional] Class names of MapComponents to inject into save games
             <li>MapComponent</li>
